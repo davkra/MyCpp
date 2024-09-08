@@ -1,7 +1,8 @@
-#include <stdio.h>
+#include <print.hpp>
 
 int main(void) {
-  printf("Hello world!\n");
+
+  my::printf("Hello world!");
 
   return 0;
 }

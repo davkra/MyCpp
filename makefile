@@ -1,36 +1,20 @@
 CC := g++
+CFLAGS := -Wall -g -std=c++11 -I./
+
 MAIN := main test
-FILENAMES := print
+DEPN := print
 
-SOURCEDIR := ./
-OBJDIR := ./obj
-INCLUDEDIR := ./
+OBJ := $(patsubst %, %.o, $(MAIN) $(DEPN))
 
-CFLAGS := -Wall -g -std=c++11 -I$(INCLUDEDIR)
-MKDIR := mkdir -p
+all: $(OBJ) $(MAIN)
 
-_OBJ := $(FILENAMES:=.o)
-OBJ := $(patsubst %,$(OBJDIR)/%,$(_OBJ))
-
-_BIN := $(MAIN:=.o)
-BIN := $(patsubst %,$(OBJDIR)/%,$(_BIN))
-
-all: $(OBJDIR) $(OBJ) $(BIN) $(MAIN)
-
-$(OBJDIR)/%.o: %.cpp
+%.o: %.cpp
 	$(CC) $(CFLAGS) -c -o $@ $^
 
-$(OBJDIR)/%.o: $(SOURCEDIR)/%.cpp
-	$(CC) $(CFLAGS) -c -o $@ $^
-
-%: $(OBJDIR) $(OBJDIR)/%.o $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $(filter-out $<,$^)
-
-$(OBJDIR):
-	$(MKDIR) $(OBJDIR)
+%: %.o $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $< $(filter-out $(patsubst %, %.o, $(MAIN)), $^)
 
 .PHONY: clean
 
 clean:
-	rm -rf $(MAIN) $(OBJDIR)
-	git clean -fdx
+	rm -rfv $(MAIN) $(OBJ)
