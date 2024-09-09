@@ -5,20 +5,21 @@ ODIR := ./obj
 SDIR := ./src
 IDIR := ./src/inc
 
-DEP := $(ODIR)/print.o
-OBJ := $(DEP) $(ODIR)/main.o $(ODIR)/test.o
 BIN := $(patsubst %.cpp, %, $(wildcard *.cpp))
+DEP := $(patsubst $(SDIR)/%.cpp, $(ODIR)/%.o, $(wildcard $(SDIR)/*.cpp))
+OBJ := $(DEP) $(patsubst %, $(ODIR)/%.o, $(BIN))
 
-all: $(OBJ) $(BIN)
+all: $(ODIR) $(OBJ) $(BIN)
 
 rebuild: clean all
 
+$(ODIR):
+	mkdir -p $(ODIR)
+
 $(ODIR)/%.o: $(SDIR)/%.cpp
-	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -c -o $@ $< -I$(IDIR)
 
 $(ODIR)/%.o: %.cpp
-	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -c -o $@ $^ -I$(IDIR)
 
 %: $(DEP) $(ODIR)/%.o
@@ -27,4 +28,4 @@ $(ODIR)/%.o: %.cpp
 .PHONY: clean
 
 clean:
-	@rm -rf $(ODIR) *.o $(BIN)
+	rm -rfv $(ODIR) *.o $(BIN)
