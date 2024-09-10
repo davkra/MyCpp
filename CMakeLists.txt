@@ -1,3 +1,6 @@
+# cmake -B build
+# cmake --build ./build --target clean
+
 cmake_minimum_required(VERSION 3.10)
 project(MyCpp)
 
@@ -13,16 +16,16 @@ foreach(bin_src ${MyCpp_bin})
   set_target_properties(${bin} PROPERTIES CXX_STANDARD 11)
 endforeach(bin_src ${MyCpp_bin})
 
-set_property(
-  DIRECTORY
-  APPEND
-  PROPERTY ADDITIONAL_CLEAN_FILES
-
-  # cmake files
-  build/
-  CMakeCache.txt
-  CMakeFiles/
-  cmake_install.cmake
-  compile_commands.json
-  Makefile
-)
+# clean all properties
+#set_property(
+#  DIRECTORY
+#  APPEND
+#  PROPERTY ADDITIONAL_CLEAN_FILES
+#  # cmake files
+#  # ${CMAKE_CURRENT_BINARY_DIR}
+#  CMakeCache.txt
+#  CMakeFiles/
+#  cmake_install.cmake
+#  compile_commands.json
+#  Makefile
+#)

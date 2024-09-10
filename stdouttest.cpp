@@ -65,7 +65,7 @@ int main(int argc, char const *argv[])
   // ====================================================================
 
   printf("Hello world!\n");
-  std::cout << "Heeeey!" << std::endl;
+  std::cout << "Hello stdout!" << std::endl;
   fprintf(stdout, "fprint\n");
 
   // ====================================================================
