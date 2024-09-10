@@ -1,6 +1,5 @@
 #include <fstream>
 #include <iostream>
-#include <stdlib.h>
 #include <unistd.h>
 
 void test_function(void)
