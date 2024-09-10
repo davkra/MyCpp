@@ -9,6 +9,10 @@ Makefile
 
 # make
 *.o
-main
-test
 hello
+main
+stdouttest
+test
+
+# miscellaneous
+temp_output.txt
