@@ -19,12 +19,10 @@ set_property(
   PROPERTY ADDITIONAL_CLEAN_FILES
 
   # cmake files
+  build/
   CMakeCache.txt
-  CMakeFiles
+  CMakeFiles/
   cmake_install.cmake
-  Makefile
   compile_commands.json
-
-  # output files
-  temp_output.txt
+  Makefile
 )

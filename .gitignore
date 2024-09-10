@@ -2,9 +2,10 @@
 .vscode/
 
 # cmake
-cmake_install.cmake
+build/
 CMakeCache.txt
 CMakeFiles/
+cmake_install.cmake
 Makefile
 
 # make
@@ -13,6 +14,3 @@ hello
 main
 stdouttest
 test
-
-# miscellaneous
-temp_output.txt
