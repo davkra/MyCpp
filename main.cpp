@@ -2,7 +2,8 @@
 #include <print.hpp>
 #include <string>
 
-int main() {
+int main()
+{
   char buffer[100];
   int value = 42;
   snprintf(buffer, sizeof(buffer), "The value is: %d", value);
