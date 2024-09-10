@@ -7,42 +7,68 @@ void test_function(void)
   printf("[test_function]: print test\n");
 }
 
-int main(int argc, char const *argv[])
+class SwitchStdout
 {
-  std::cout << "Debug Test" << std::endl;
+private:
+  FILE *original_stdout;
 
-  // Backup original stdout
-  FILE *original_stdout = fdopen(dup(fileno(stdout)), "w");
-
-  if (freopen("temp_output.txt", "w", stdout))
+public:
+  SwitchStdout()
   {
-    printf("Hello world!\n");
+    this->original_stdout = fdopen(dup(fileno(stdout)), "w");
+  }
 
-    // Flush the output to the file, but don't close stdout
-    fflush(stdout);
+  int switch_stdout_to_file(std::string file_name)
+  {
+    if (!freopen(file_name.c_str(), "w", stdout))
+    {
+      std::cout << "ERROR!" << std::endl;
+      return -1;
+    }
+    return 0;
+  }
 
-    // Restore stdout to the original stream
-    dup2(fileno(original_stdout), fileno(stdout));
-    fclose(original_stdout); // Close the copy of stdout
+  void switch_stdout_to_console(std::string file_name)
+  {
+  }
+};
+
+void print_file(std::string file_name)
+{
+  std::ifstream f(file_name);
+  if (f.is_open())
+  {
+    std::cout << f.rdbuf();
   }
   else
+  {
+    std::cout << "Error opening the file!" << std::endl;
+  }
+}
+
+int main(int argc, char const *argv[])
+{
+  //SwitchStdout switchStandout;
+  //switchStandout.switch_stdout_to_file("temp_output.txt");
+
+  FILE *original_stdout = fdopen(dup(fileno(stdout)), "w");
+  if (!freopen("temp_output.txt", "w", stdout))
   {
     std::cout << "ERROR!" << std::endl;
     return -1;
   }
 
-  // Read and print the file content
-  std::ifstream f("temp_output.txt");
-  if (f.is_open())
-  {
-    std::cout << "file is open" << std::endl;
-    std::cout << f.rdbuf();
-  }
-  else
-  {
-    std::cerr << "Error opening the file!" << std::endl;
-  }
+  // printf will now save in file "temp_output.txt"
+  printf("Hello world!\n");
+  std::cout << "Heeeey!" << std::endl;
+  fprintf(stdout, "fprint\n");
+  //
 
-  // Now printf and cout will work again
+  fflush(stdout);
+  dup2(fileno(original_stdout), fileno(stdout));
+  fclose(original_stdout);
+
+  print_file("temp_output.txt");
+
   return 0;
 }
