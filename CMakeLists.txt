@@ -17,15 +17,16 @@ foreach(bin_src ${MyCpp_bin})
 endforeach(bin_src ${MyCpp_bin})
 
 # clean all properties
-#set_property(
-#  DIRECTORY
-#  APPEND
-#  PROPERTY ADDITIONAL_CLEAN_FILES
-#  # cmake files
-#  # ${CMAKE_CURRENT_BINARY_DIR}
-#  CMakeCache.txt
-#  CMakeFiles/
-#  cmake_install.cmake
-#  compile_commands.json
-#  Makefile
-#)
+set_property(
+  DIRECTORY
+  APPEND
+  PROPERTY ADDITIONAL_CLEAN_FILES
+  # cmake files
+  # ${CMAKE_CURRENT_BINARY_DIR}
+  .cmake/
+  CMakeCache.txt
+  CMakeFiles/
+  cmake_install.cmake
+  compile_commands.json
+  Makefile
+)
