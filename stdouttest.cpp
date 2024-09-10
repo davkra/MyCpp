@@ -48,8 +48,8 @@ void print_file(std::string file_name)
 
 int main(int argc, char const *argv[])
 {
-  //SwitchStdout switchStandout;
-  //switchStandout.switch_stdout_to_file("temp_output.txt");
+  // SwitchStdout switchStandout;
+  // switchStandout.switch_stdout_to_file("temp_output.txt");
 
   FILE *original_stdout = fdopen(dup(fileno(stdout)), "w");
   if (!freopen("temp_output.txt", "w", stdout))
