@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
 project(MyCpp)
 
-include_directories(./src/inc)
+include_directories("./src/inc")
 
 file(GLOB MyCpp_src "./src/*.cpp")
-file(GLOB MyCpp_bin *.cpp)
+file(GLOB MyCpp_bin "*.cpp")
 
 foreach(bin_src ${MyCpp_bin})
   get_filename_component(bin ${bin_src} NAME_WE)
@@ -13,18 +13,18 @@ foreach(bin_src ${MyCpp_bin})
   set_target_properties(${bin} PROPERTIES CXX_STANDARD 11)
 endforeach(bin_src ${MyCpp_bin})
 
-add_custom_target(clean_cmake_files
-    COMMAND make clean && ${CMAKE_COMMAND} -E rm -rf
-        CMakeCache.txt
-        CMakeFiles
-        cmake_install.cmake
-        Makefile
-        compile_commands.json
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-    COMMENT "Removing CMake-generated files"
-)
+set_property(
+  DIRECTORY
+  APPEND
+  PROPERTY ADDITIONAL_CLEAN_FILES
 
-add_custom_target(distclean
-    DEPENDS clean_cmake_files
-    COMMENT "Running custom clean (removes CMake files)"
+  # cmake files
+  CMakeCache.txt
+  CMakeFiles
+  cmake_install.cmake
+  Makefile
+  compile_commands.json
+
+  # output files
+  temp_output.txt
 )

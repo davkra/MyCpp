@@ -28,4 +28,4 @@ $(ODIR)/%.o: %.cpp
 .PHONY: clean
 
 clean:
-	rm -rfv $(ODIR) *.o $(BIN)
+	rm -rfv $(ODIR) *.o $(BIN) temp_output.txt
