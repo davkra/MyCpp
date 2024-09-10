@@ -11,17 +11,10 @@ void test_function(void)
 class SwitchStdout
 {
 private:
-  FILE *original_stdout;
-
 public:
-  SwitchStdout()
+  int switch_stdout_to_file(std::string filename)
   {
-    this->original_stdout = fdopen(dup(fileno(stdout)), "w");
-  }
-
-  int switch_stdout_to_file(std::string file_name)
-  {
-    if (!freopen(file_name.c_str(), "w", stdout))
+    if (!freopen(filename.c_str(), "w", stdout))
     {
       std::cout << "ERROR!" << std::endl;
       return -1;
@@ -29,7 +22,7 @@ public:
     return 0;
   }
 
-  void switch_stdout_to_console(std::string file_name)
+  void switch_stdout_to_console(FILE *original_stdout)
   {
     fflush(stdout);
     dup2(fileno(original_stdout), fileno(stdout));
@@ -37,21 +30,14 @@ public:
   }
 };
 
-void switch_stdout_to_console(FILE *original_stdout)
+std::string read_and_remove_file(std::string filename)
 {
-  fflush(stdout);
-  dup2(fileno(original_stdout), fileno(stdout));
-  fclose(original_stdout);
-}
-
-std::string read_and_remove_file(std::string file_name)
-{
-  std::ifstream f(file_name);
+  std::ifstream f(filename);
   if (f.is_open())
   {
     std::stringstream buffer;
     buffer << f.rdbuf();
-    remove(file_name.c_str());
+    // remove(filename.c_str());
 
     return buffer.str();
   }
@@ -64,17 +50,13 @@ std::string read_and_remove_file(std::string file_name)
 
 int main(int argc, char const *argv[])
 {
-  // SwitchStdout switchStandout;
+  SwitchStdout switchStandout;
   // switchStandout.switch_stdout_to_file("temp_output.txt");
 
   FILE *original_stdout = fdopen(dup(fileno(stdout)), "w");
   std::string filename = "temp_output.txt";
 
-  if (!freopen(filename.c_str(), "w", stdout))
-  {
-    std::cout << "ERROR!" << std::endl;
-    return -1;
-  }
+  switchStandout.switch_stdout_to_file(filename);
 
   // printf will now save in file "temp_output.txt"
   printf("Hello world!\n");
@@ -82,7 +64,7 @@ int main(int argc, char const *argv[])
   fprintf(stdout, "fprint\n");
   //
 
-  switch_stdout_to_console(original_stdout);
+  switchStandout.switch_stdout_to_console(original_stdout);
 
   // save "temp_output.txt" in string
   std::string output = read_and_remove_file("temp_output.txt");
