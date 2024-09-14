@@ -13,7 +13,7 @@ int main(int argc, char const *argv[])
     c = getchar();
     buffer[ctr++] = c;
   }
-  buffer[ctr+1] = '\0';
+  buffer[ctr] = '\0';
 
   printf("=============\n");
   printf("%s\n", buffer);
