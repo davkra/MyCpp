@@ -1,6 +1,9 @@
 #include <iostream>
 
 #include <SwitchStdout.hpp>
+#include <print.hpp>
+
+using my::print;
 
 void test_function(void)
 {
@@ -19,6 +22,8 @@ int main(int argc, char const *argv[])
   fprintf(stdout, "fprint\n");
 
   test_function();
+
+  print(2, "Hello", true, false, 2.3, 'a');
 
   // ====================================================================
 

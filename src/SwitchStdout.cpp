@@ -27,14 +27,18 @@ void SwitchStdout::switch_stdout_to_console()
   fclose(original_stdout);
 }
 
-std::string SwitchStdout::read_and_remove_file()
+std::string SwitchStdout::read_and_remove_file(bool removefile)
 {
   std::ifstream f(filename);
   if (f.is_open())
   {
     std::stringstream buffer;
     buffer << f.rdbuf();
-    remove(filename.c_str());
+
+    if (removefile)
+    {
+      remove(filename.c_str());
+    }
 
     return buffer.str();
   }
