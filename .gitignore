@@ -13,5 +13,7 @@ Makefile
 *.o
 hello
 main
-stdouttest
 printtest
+readInput
+stdouttest
+
