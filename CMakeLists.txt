@@ -7,7 +7,7 @@ project(MyCpp)
 include_directories("./src/inc")
 
 file(GLOB MyCpp_src "./src/*.cpp" "./src/*.c")
-file(GLOB MyCpp_bin "*.cpp" "*.c")
+file(GLOB MyCpp_bin "./bin/*.cpp" "./bin/*.c")
 
 foreach(bin_src ${MyCpp_bin})
   get_filename_component(bin ${bin_src} NAME_WE)
