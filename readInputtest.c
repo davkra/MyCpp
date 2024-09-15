@@ -5,7 +5,8 @@
 
 int main(int argc, char const *argv[])
 {
-  char *buffer = readInput();
+  printf("Input: ");
+  char *buffer = dynamicReadInput();
 
   printf("=============\n");
   printf("%s\n", buffer);
