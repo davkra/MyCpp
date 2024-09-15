@@ -21,7 +21,7 @@ template <typename T> void print(const T &first)
 template <typename T, typename... Args>
 void print(const T &first, const Args &...args)
 {
-  cout << first << " ";
+  cout << first;
   print(args...);
 }
 
